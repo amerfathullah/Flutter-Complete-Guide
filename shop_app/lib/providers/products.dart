@@ -68,10 +68,10 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     final url = Uri.parse(
         'https://shop-app-f4e11-default-rtdb.asia-southeast1.firebasedatabase.app/products.json');
-    http
+    return http
         .post(url,
             body: json.encode({
               'title': product.title,
@@ -83,7 +83,7 @@ class Products with ChangeNotifier {
         .then((res) {
       print(json.decode(res.body));
       final newProduct = Product(
-          id: DateTime.now().toString(),
+          id: json.decode(res.body)['name'],
           title: product.title,
           description: product.description,
           price: product.price,
@@ -91,6 +91,9 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
     });
   }
 
