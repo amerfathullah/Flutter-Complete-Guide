@@ -130,7 +130,7 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url = Uri.parse(
-          'https://shop-app-f4e11-default-rtdb.asia-southeast1.firebasedatabase.app/products/${id}.json');
+          'https://shop-app-f4e11-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json');
       await http.patch(url,
           body: json.encode({
             'title': newProduct.title,
