@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/http_exception.dart';
 import '../providers/auth.dart';
+import '../models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -109,15 +109,15 @@ class _AuthCardState extends State<AuthCard> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An error occured!'),
+        title: Text('An Error Occurred!'),
         content: Text(message),
-        actions: [
+        actions: <Widget>[
           FlatButton(
+            child: Text('Okay'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
-            child: Text('Okay'),
-          ),
+          )
         ],
       ),
     );
@@ -151,7 +151,7 @@ class _AuthCardState extends State<AuthCard> {
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email address is already in use.';
       } else if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'This is not a valid email address.';
+        errorMessage = 'This is not a valid email address';
       } else if (error.toString().contains('WEAK_PASSWORD')) {
         errorMessage = 'This password is too weak.';
       } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
@@ -165,6 +165,7 @@ class _AuthCardState extends State<AuthCard> {
           'Could not authenticate you. Please try again later.';
       _showErrorDialog(errorMessage);
     }
+
     setState(() {
       _isLoading = false;
     });
@@ -208,7 +209,6 @@ class _AuthCardState extends State<AuthCard> {
                     if (value.isEmpty || !value.contains('@')) {
                       return 'Invalid email!';
                     }
-                    return null;
                     return null;
                   },
                   onSaved: (value) {
